@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    command: python main.py
+    volumes:
+      - .:/code
+      - ./data/db:/var/lib/postgresql/data
+      - ./data/db:/var/lib/postgresql/data
