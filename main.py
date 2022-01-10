@@ -5,6 +5,8 @@
 
 
 from collections import namedtuple
+import os
+
 from joblib import Parallel, delayed
 import requests
 
@@ -20,8 +22,11 @@ import logging
 
 # In[2]:
 
+from dotenv import load_dotenv
+load_dotenv()
 
-API = '86b10fc39b08af63d279caba40862fb5'
+API  = os.environ.get('API')
+
 
 
 # In[3]:
@@ -53,8 +58,9 @@ def get_temp(rec, dts):
     try:
         resp = requests.get(URL, params=params).json()
         temp = resp['current']['temp']
-    except e:
+    except KeyError as e:
         logging.error(resp['message'])
+        exit()
     return {'location': rec.Index, 'temp': temp, 'dts':dts}
 
 
@@ -130,8 +136,8 @@ agg2.head()
 # In[16]:
 
 
-max_temp.to_csv(f"data/data1_{arrow.utcnow().format('YYYY-MM-DD HH:MM:SS')}.csv")
-agg2.to_csv(f"data/data2_{arrow.utcnow().format('YYYY-MM-DD HH:MM:SS')}.csv")
+max_temp.to_csv(f"datadir1/data_{arrow.utcnow().format('YYYY-MM-DD_HH:MM:SS')}.csv")
+agg2.to_csv(f"datadir2/data_{arrow.utcnow().format('YYYY-MM-DD_HH:MM:SS')}.csv")
 
 
 # In[ ]:

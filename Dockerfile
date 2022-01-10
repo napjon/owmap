@@ -12,7 +12,7 @@ RUN pip install -r requirements.txt
 
 # copy the content of the local src directory to the working directory
 COPY main.py .
-COPY geto_latlon.csv .
+COPY geo_latlon.csv .
 
 # command to run on container start
-# CMD [ "python", "./main.py" ]
+CMD [ "python", "./main.py" ]
